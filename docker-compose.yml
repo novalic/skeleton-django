@@ -1,0 +1,31 @@
+version: "2"
+
+services:
+   skeleton-django-db:
+     image: mariadb
+     volumes:
+       - db_data:/var/lib/mysql
+     environment:
+       MYSQL_ROOT_PASSWORD: rootpassword
+       MYSQL_DATABASE: skeletondjango
+       MYSQL_USER: nicolas
+       MYSQL_PASSWORD: qwerty
+
+   skeleton-django-service:
+     build: .
+     depends_on:
+       - skeleton-django-db
+     command: /env/bin/python /app/manage.py runserver 0.0.0.0:8990
+     env_file:
+       - variables.dev
+     environment:
+       - DJANGO_SETTINGS_MODULE=skeletondjango.settings.development
+       - RDS_HOSTNAME=skeleton-django-db
+     ports:
+       - 8990:8990
+     volumes:
+       - .:/app
+
+volumes:
+    db_data:
+      driver: local
