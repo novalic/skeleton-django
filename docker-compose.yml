@@ -3,7 +3,9 @@ version: "2"
 services:
    skeleton-django-db:
      image: mariadb
+     restart: unless-stopped
      volumes:
+       - ./docker/db_init:/docker-entrypoint-initdb.d
        - db_data:/var/lib/mysql
      environment:
        MYSQL_ROOT_PASSWORD: rootpassword
@@ -13,6 +15,7 @@ services:
 
    skeleton-django-service:
      build: .
+     restart: unless-stopped
      depends_on:
        - skeleton-django-db
      command: /env/bin/python /app/manage.py runserver 0.0.0.0:8990
