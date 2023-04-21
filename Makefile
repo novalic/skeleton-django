@@ -17,4 +17,13 @@ migrate: up
 makemigrations: up
 	docker-compose exec skeleton-django-service /env/bin/python /app/manage.py makemigrations
 
+shell: up
+	docker-compose exec skeleton-django-service /env/bin/python /app/manage.py shell
+
+down:
+	docker-compose down
+
+clean:
+	docker-compose down --volumes
+
 .PHONY: build up test clean
