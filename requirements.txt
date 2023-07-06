@@ -1,7 +1,7 @@
 django==4.2.1
 djangorestframework==3.14.0
 
-mysqlclient==2.1.1
+mysqlclient==2.2.0
 
 # -------------------------------- Dev
 
